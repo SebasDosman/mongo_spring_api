@@ -19,8 +19,8 @@ Example:
 ```bash
 POST /api/users
 {
-"name": "John Doe",
-"email": "johndoe@example.com"
+    "name": "John Doe",
+    "email": "johndoe@example.com"
 }
 ```
 
@@ -36,11 +36,10 @@ DELETE /api/users/123
 The PATCH method is used to apply partial modifications to a resource.
 
 Example:
-```
-bash
+```bash
 PATCH /api/users/123
 {
-"email": "newemail@example.com"
+  "email": "newemail@example.com"
 }
 ```
 
