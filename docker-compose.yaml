@@ -1,0 +1,13 @@
+version: 'latest'
+
+services:
+  mongodb:
+    container_name: mongodb
+    environment:
+      - 'MONGO_INITDB_DATABASE=admin'
+      - 'MONGO_INITDB_ROOT_PASSWORD=root'
+      - 'MONGO_INITDB_ROOT_USERNAME=root'
+    image: 'mongo:latest'
+    ports:
+      - '27017'
+    restart: always
