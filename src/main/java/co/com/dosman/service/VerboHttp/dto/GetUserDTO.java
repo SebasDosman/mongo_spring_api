@@ -10,9 +10,11 @@ import lombok.ToString;
 @Builder
 @Data
 @ToString
-public class UserResponse {
+public class GetUserDTO {
+    private String id;
     private String name;
     private String lastName;
     private Integer age;
     private String email;
+    private String password;
 }
