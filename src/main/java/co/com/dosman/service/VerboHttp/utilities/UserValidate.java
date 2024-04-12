@@ -1,5 +1,6 @@
 package co.com.dosman.service.VerboHttp.utilities;
 
+
 public class UserValidate {
     public static final String USER_NOT_NULL = "User can't be null";
     public final static String NAME_NOT_NULL = "User name can't be null";

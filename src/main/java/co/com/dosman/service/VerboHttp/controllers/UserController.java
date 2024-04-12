@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @DeleteMapping(path = "/deleteUser/{id}")
-    public ResponseEntity deleteUser(@PathVariable String id) throws UserException {
+    @DeleteMapping(path = "/deleteUser/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteUser(@PathVariable String id) {
         try {
             return new ResponseEntity(MessageResponse.builder().message(userService.deleteUser(id)).build(), HttpStatus.OK);
         } catch (UserException ex) {
@@ -29,13 +29,18 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "/getAllUsers")
+    @RequestMapping(path = "existsUserById/{id}", method = RequestMethod.HEAD)
+    public ResponseEntity existsUserById(@PathVariable String id) {
+        return userService.existsUserById(id) ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(path = "/getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAllUsers() {
         return new ResponseEntity(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/getUserById/{id}")
-    public ResponseEntity getUserById(@PathVariable String id) throws UserException {
+    @GetMapping(path = "/getUserById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getUserById(@PathVariable String id) {
         try {
             return new ResponseEntity(userService.getUserById(id), HttpStatus.OK);
         } catch (UserException ex) {
@@ -43,8 +48,17 @@ public class UserController {
         }
     }
 
+    @PatchMapping(path = "/patchUser/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity patchUser(@PathVariable String id, @RequestBody UserRequest userRequest) {
+        try {
+            return new ResponseEntity(userService.patchUser(id, userRequest), HttpStatus.OK);
+        } catch (UserException ex) {
+            return new ResponseEntity(ErrorResponse.builder().error(ex.getMessage()).build(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping(path = "/saveUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity saveUser(@RequestBody UserRequest userRequest) throws UserException {
+    public ResponseEntity saveUser(@RequestBody UserRequest userRequest) {
         try {
             return new ResponseEntity(userService.saveUser(userRequest), HttpStatus.CREATED);
         } catch (UserException ex) {
@@ -53,18 +67,9 @@ public class UserController {
     }
 
     @PutMapping(path = "/updateUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateUser(@RequestBody UserRequest userRequest) throws UserException {
+    public ResponseEntity updateUser(@RequestBody UserRequest userRequest) {
         try {
             return new ResponseEntity(userService.updateUser(userRequest), HttpStatus.OK);
-        } catch (UserException ex) {
-            return new ResponseEntity(ErrorResponse.builder().error(ex.getMessage()).build(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PatchMapping(path = "/patchUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity patchUser(@RequestBody UserRequest userRequest) throws UserException {
-        try {
-            return new ResponseEntity(userService.patchUser(userRequest), HttpStatus.OK);
         } catch (UserException ex) {
             return new ResponseEntity(ErrorResponse.builder().error(ex.getMessage()).build(), HttpStatus.BAD_REQUEST);
         }

@@ -4,6 +4,7 @@ import co.com.dosman.service.VerboHttp.dto.UserRequest;
 import co.com.dosman.service.VerboHttp.dto.UserResponse;
 import co.com.dosman.service.VerboHttp.exceptions.UserException;
 import co.com.dosman.service.VerboHttp.mappers.UserMapper;
+import co.com.dosman.service.VerboHttp.model.User;
 import co.com.dosman.service.VerboHttp.repositories.UserRepository;
 import co.com.dosman.service.VerboHttp.services.IUserService;
 import co.com.dosman.service.VerboHttp.utilities.UserValidate;
@@ -42,6 +43,22 @@ public class UserService implements IUserService {
         }
     }
 
+    private void validatePatchUser(String id, UserRequest userRequest) throws UserException {
+        if (!userRepository.existsById(id)) throw new UserException(UserValidate.USER_NOT_FOUND);
+
+        validateUser(userRequest, true);
+
+        User user = userRepository.findById(id).get();
+
+        if (userRequest.getId().equals(id)) {
+            if (userRequest.getName() != null) user.setName(userRequest.getName());
+            if (userRequest.getLastName() != null) user.setLastName(userRequest.getLastName());
+            if (userRequest.getAge() != null) user.setAge(userRequest.getAge());
+            if (userRequest.getEmail() != null) user.setEmail(userRequest.getEmail());
+            if (userRequest.getPassword() != null) user.setPassword(userRequest.getPassword());
+        }
+    }
+
     @Override
     public String deleteUser(String id) throws UserException {
         if (!userRepository.existsById(id)) throw new UserException(UserValidate.USER_NOT_FOUND);
@@ -49,6 +66,11 @@ public class UserService implements IUserService {
         userRepository.delete(userRepository.findById(id).get());
 
         return String.format(UserValidate.USER_ELIMINATED, id);
+    }
+
+    @Override
+    public boolean existsUserById(String id) {
+        return userRepository.existsById(id);
     }
 
     @Override
@@ -64,6 +86,18 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public void userOptions() {
+
+    }
+
+    @Override
+    public UserResponse patchUser(String id, UserRequest userRequest) throws UserException {
+        validatePatchUser(id, userRequest);
+
+        return UserMapper.domainToRequest(userRepository.save(UserMapper.requestToDomain(userRequest)));
+    }
+
+    @Override
     public UserResponse saveUser(UserRequest userRequest) throws UserException {
         validateUser(userRequest, false);
 
@@ -72,13 +106,6 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponse updateUser(UserRequest userRequest) throws UserException {
-        validateUser(userRequest, true);
-
-        return UserMapper.domainToRequest(userRepository.save(UserMapper.requestToDomain(userRequest)));
-    }
-
-    @Override
-    public UserResponse patchUser(UserRequest userRequest) throws UserException {
         validateUser(userRequest, true);
 
         return UserMapper.domainToRequest(userRepository.save(UserMapper.requestToDomain(userRequest)));

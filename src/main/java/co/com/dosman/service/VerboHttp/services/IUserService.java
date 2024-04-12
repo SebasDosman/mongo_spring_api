@@ -9,9 +9,11 @@ import java.util.List;
 
 public interface IUserService {
     String deleteUser(String id) throws UserException;
+    boolean existsUserById(String id);
     List<UserResponse> getAllUsers();
     UserResponse getUserById(String id) throws UserException;
+    void userOptions();
+    UserResponse patchUser(String id, UserRequest userRequest) throws UserException;
     UserResponse saveUser(UserRequest userRequest) throws UserException;
     UserResponse updateUser(UserRequest userRequest) throws UserException;
-    UserResponse patchUser(UserRequest userRequest) throws UserException;
 }
