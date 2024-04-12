@@ -48,6 +48,11 @@ public class UserController {
         }
     }
 
+    @RequestMapping(path = "optionsUser")
+    public ResponseEntity optionsUser() {
+        return new ResponseEntity(userService.optionsUser(), HttpStatus.OK);
+    }
+
     @PatchMapping(path = "/patchUser/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity patchUser(@PathVariable String id, @RequestBody UserRequest userRequest) {
         try {

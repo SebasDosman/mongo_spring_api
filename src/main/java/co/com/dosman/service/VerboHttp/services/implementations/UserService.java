@@ -9,6 +9,7 @@ import co.com.dosman.service.VerboHttp.repositories.UserRepository;
 import co.com.dosman.service.VerboHttp.services.IUserService;
 import co.com.dosman.service.VerboHttp.utilities.UserValidate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -86,8 +87,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void userOptions() {
+    public HttpHeaders optionsUser() {
+        HttpHeaders httpHeaders = new HttpHeaders();
 
+        httpHeaders.add("Allow", "DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT");
+        httpHeaders.add("Access-Control-Allow-Methods", "DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT");
+
+        return httpHeaders;
     }
 
     @Override
