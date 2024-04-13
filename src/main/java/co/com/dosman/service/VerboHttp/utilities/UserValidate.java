@@ -5,7 +5,6 @@ public class UserValidate {
     public final static String USER_NOT_NULL = "User can't be null";
     public final static String ID_NOT_NULL = "User id can't be null";
     public final static String ID_NOT_EMPTY = "User id can't be empty";
-    public final static String ID_ALREADY_EXISTS = "User id already exists";
     public final static String NAME_NOT_NULL = "User name can't be null";
     public final static String NAME_NOT_EMPTY = "User name can't be empty";
     public final static String NAME_NOT_VALID = "User name is not valid";

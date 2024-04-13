@@ -12,7 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 
 @Service
@@ -44,8 +43,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean existsUserById(String id) {
-        return userRepository.existsById(id);
+    public HttpHeaders getUserHeaderById(String id) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        if (userRepository.existsById(id)) {
+            User user = userRepository.findById(id).get();
+
+            httpHeaders.add("User-Name", user.getName());
+            httpHeaders.add("User-Email", user.getEmail());
+        }
+
+        return httpHeaders;
     }
 
     @Override
@@ -79,6 +87,8 @@ public class UserService implements IUserService {
 
     @Override
     public GetUserDTO saveUser(CreateUserDTO createUserDTO) throws UserException {
+        if (userRepository.existsByEmail(createUserDTO.getEmail())) throw new UserException(UserValidate.EMAIL_ALREADY_EXISTS);
+
         return UserMapper.domainToGetUserDto(userRepository.save(UserMapper.createUserDtoToDomain(createUserDTO)));
     }
 

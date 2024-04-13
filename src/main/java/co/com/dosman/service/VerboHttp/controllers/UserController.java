@@ -30,7 +30,7 @@ public class UserController {
 
     @RequestMapping(path = "/existsUserById/{id}", method = RequestMethod.HEAD)
     public ResponseEntity existsUserById(@PathVariable String id) {
-        return userService.existsUserById(id) ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(userService.getUserHeaderById(id), HttpStatus.OK);
     }
 
     @GetMapping(path = "/getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,7 +47,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(path = "/optionsUser")
+    @RequestMapping(path = "/optionsUser", method = RequestMethod.OPTIONS)
     public ResponseEntity optionsUser() {
         return new ResponseEntity(userService.optionsUser(), HttpStatus.OK);
     }

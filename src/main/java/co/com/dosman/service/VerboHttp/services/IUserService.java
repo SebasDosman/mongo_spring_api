@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IUserService {
     String deleteUser(String id) throws UserException;
-    boolean existsUserById(String id);
+    HttpHeaders getUserHeaderById(String id);
     List<GetUserDTO> getAllUsers();
     GetUserDTO getUserById(String id) throws UserException;
     HttpHeaders optionsUser();
