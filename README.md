@@ -1,7 +1,7 @@
 # Spring MongoDB REST API Project
 Welcome to our Spring project with MongoDB integration. This project demonstrates building a RESTful API using Spring Boot and MongoDB, dockerized for easy deployment.
 
-## HTTP Verbs
+## HTTP Methods
 In RESTful APIs, various HTTP methods (verbs) are used to perform different actions on resources. Here are the commonly used HTTP verbs:
 
 ## GET
@@ -17,10 +17,13 @@ The POST method is used to submit data to be processed to a specified resource. 
 
 Example:
 ```bash
-POST /api/users
+POST /user/saveUser
 {
-    "name": "John Doe",
-    "email": "johndoe@example.com"
+    "name": "John",
+    "lastName": "Doe",
+    "age": 20,
+    "email": "johndoe@example.com",
+    "password": "John123*"
 }
 ```
 
@@ -29,7 +32,7 @@ The DELETE method is used to delete a specified resource.
 
 Example:
 ```bash
-DELETE /api/users/123
+DELETE /user/deleteUser/123
 ```
 
 ## PATCH
@@ -37,9 +40,14 @@ The PATCH method is used to apply partial modifications to a resource.
 
 Example:
 ```bash
-PATCH /api/users/123
+PATCH /api/patchUser/123
 {
-  "email": "newemail@example.com"
+    "id": "123",
+    "name": "John",
+    "lastName": "Doe",
+    "age": 20,
+    "email": "johndoe@example.com",
+    "password": "John123*"
 }
 ```
 
@@ -48,10 +56,14 @@ The PUT method is used to update a resource or create a new resource if it does 
 
 Example:
 ```bash
-PUT /api/users/123
+PUT /user/updateUser/123
 {
-"name": "Jane Doe",
-"email": "janedoe@example.com"
+    "id": "123",
+    "name": "John",
+    "lastName": "Doe",
+    "age": 20,
+    "email": "johndoe@example.com",
+    "password": "John123*"
 }
 ```
 
@@ -60,7 +72,7 @@ The HEAD method asks for a response identical to that of a GET request, but with
 
 Example:
 ```bash
-HEAD /api/users/123
+HEAD /user/getUserHeaderById/123
 ```
 
 ## OPTIONS
@@ -68,7 +80,7 @@ The OPTIONS method is used to describe the communication options for the target 
 
 Example:
 ```bash
-OPTIONS /api/users
+OPTIONS /user/userOptions
 ```
 
 ## Getting Started
