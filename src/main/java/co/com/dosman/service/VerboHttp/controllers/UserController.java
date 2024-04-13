@@ -28,8 +28,8 @@ public class UserController {
         }
     }
 
-    @RequestMapping(path = "/existsUserById/{id}", method = RequestMethod.HEAD)
-    public ResponseEntity existsUserById(@PathVariable String id) {
+    @RequestMapping(path = "/getUserHeaderById/{id}", method = RequestMethod.HEAD)
+    public ResponseEntity getUserHeaderById(@PathVariable String id) {
         return new ResponseEntity(userService.getUserHeaderById(id), HttpStatus.OK);
     }
 
