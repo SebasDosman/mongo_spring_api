@@ -25,7 +25,7 @@ public class ApplicationExceptionHandler {
         return errors;
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserException.class)
     public Map<String, String> handleUserException(UserException ex) {
         Map<String, String> errors = new HashMap<>();
